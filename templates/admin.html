@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}ADMIN PANEL{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <br>
+        <h4 class="text-center">HOSPITALS</h4>
+
+        <table class="table table-hover table-inverse">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Rate</th>
+                <th>Handicapped</th>
+                <th>Park</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for hospital in hospitals %}
+            <tr>
+                <td>{{ hospital[0] }}</td>
+                <td>{{ hospital[1] }}/{{ hospital[2] }}</td>
+                <td>{{ hospital[3] }}</td>
+                <td>{{ hospital[4] }}</td>
+                <td>{{ hospital[5] }}</td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

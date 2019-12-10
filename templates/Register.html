@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <br>
+        <h4 class="text-center">Welcome</h4>
+                <form method="POST" action="/add_person">
+                    <div class="form-group row">
+                        <label for="doctor_name" class="col-sm-2 col-form-label">Name:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="name" class="form-control" id="doctor_name" placeholder="Mehmet">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">Surname: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="surname" class="form-control" id="doctor_name" placeholder="Yıldız">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">TC: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="tc" class="form-control" id="doctor_name" placeholder="Must be legit TC no">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">E-mail: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="email" class="form-control" id="doctor_name" placeholder="Will be used to contact">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">Address: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="address" class="form-control" id="doctor_name" placeholder="Must be specific">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">Password: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="password" class="form-control" id="doctor_name" placeholder="Declare a password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="doctor_select" class="col-sm-2 col-form-label">Authorization: </label>
+                        <div class="col-sm-10">
+                            <input type="text" name="authorization" class="form-control" id="doctor_name" placeholder="Doctor, patient etc">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" id="hebe" class="btn btn-primary">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+    </div>
+{% endblock %}
