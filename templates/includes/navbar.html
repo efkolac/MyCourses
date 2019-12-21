@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">  
+		      <li class="nav-item active">
+            <a class="nav-link" href="/"> Home </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/courses"> Courses</a>
+          </li>
+          {% if session["logged_in"] and session["number"]!="000000000" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/registration"> Course Registration</a>
+          </li>
+          {% endif %}
+          {% if session["logged_in"] and session["number"]=="000000000" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/rooms"> Rooms</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/students"> Students</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/teachers"> Teachers</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/courses"> Courses</a>
+          </li>
+          {% endif %}
+        </ul>
+		    <ul class="navbar-nav ml-auto">
+		    {% if session["logged_in"] and session["number"]=="000000000" %}
+		    	<li class="nav-item active">
+            <a class="nav-link" href="/admindashboard"> Dashboard</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/logout"> Log out</a>
+          </li>
+          {% elif session["logged_in"] %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/userdashboard"> Dashboard</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/logout"> Log out</a>
+          </li>
+          {% else %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/login"> Login</a>
+          </li>
+        {% endif %}    
+        </ul>
+      </div>	
+</nav>

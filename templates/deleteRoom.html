@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3> Delete Classroom </h3>
+<hr>
+
+{% from "includes/formhelpers.html" import render_field %}
+
+<form method="post" style="align-self: center;">
+  Room Name:  
+  <select name="roomname">
+    {% for room in rooms %}
+		 <option>{{room[0]}}</option>
+     {% endfor %}
+    </select>
+    <br><br>
+	<button type="submit" class="btn btn-danger"> Delete </button>
+</form>
+
+{% endblock body %}

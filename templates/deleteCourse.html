@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3> Delete Course </h3>
+<hr>
+
+{% from "includes/formhelpers.html" import render_field %}
+
+<form method="post" style="align-self: center;">
+  CRN:  
+  <select name="coursecrn">
+
+    {% for course in courses %}
+		 <option>{{course[1]}}</option>
+     {% endfor %}
+    </select>
+    <br><br>
+	<button type="submit" class="btn btn-danger"> Delete </button>
+</form>
+
+{% endblock body %}

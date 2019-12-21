@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% from "includes/formhelpers.html" import render_field %}
+<div class="card">
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>REGISTRATION</strong>
+    </h5>
+    <div class="card-body px-lg-5 pt-0"> <br/>
+        <form method="post"> 
+            {{ render_field(form.crn,class="form-control") }}
+            {{ render_field(form.name,class="form-control") }}
+            {{ render_field(form.quota,class="form-control") }}
+            <select name="grade">       
+                <option selected="true" disabled="disabled"><bold>Grade</bold></option>     
+                     <option>1</option>
+                     <option>2</option>
+                     <option>3</option>
+                     <option>4</option>
+            </select>
+            <br><br>
+            <select name="day">       
+                <option selected="true" disabled="disabled"><bold>Day</bold></option>     
+                     <option>Monday</option>
+                     <option>Tuesday</option>
+                     <option>Wednesday</option>
+                     <option>Thursday</option>
+                     <option>Friday</option>
+            </select>
+            <br><br>
+            <select name="starttime">       
+                <option selected="true" disabled="disabled"><bold>Start Time</bold></option>     
+                     <option>9</option>
+                     <option>10</option>
+                     <option>11</option>
+                     <option>12</option>
+                     <option>13</option>
+                     <option>14</option>
+                     <option>15</option>
+                     <option>16</option>
+            </select>:00
+            <br><br>
+            <select name="endtime">       
+                <option selected="true" disabled="disabled"><bold>End time</bold></option>     
+                     <option>10</option>
+                     <option>11</option>
+                     <option>12</option>
+                     <option>13</option>
+                     <option>14</option>
+                     <option>15</option>
+                     <option>16</option>
+                     <option>17</option>
+            </select>:00
+            <br><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock body %}

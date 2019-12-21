@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<br/>
+<h3> Dashboard </h3>
+<div style="text-align: center;"><small> Welcome, Number </small> <b> {{session["number"]}} </b> </div>
+<hr>
+<div style="text-align: center;">
+    <a href="/optimize" class = "btn btn-primary"> Optimize Courses  </a>
+</div>
+
+<h3>Student Operations</h3>
+<a href="/addStudent" class = "btn btn-danger"> Add Student </a>
+<a href="/deleteStudent" class = "btn btn-danger"> Delete Student </a>
+<br><br>
+<h3>Teacher Operations</h3>
+<a href="/addTeacher" class = "btn btn-success"> Add Teacher  </a>
+<a href="/deleteTeacher" class = "btn btn-success"> Delete Teacher  </a>
+<br><br>
+<h3>Course Operations</h3>
+<a href="/addCourse" class = "btn btn-primary"> Add Course  </a>
+<a href="/deleteCourse" class = "btn btn-primary"> Delete Course  </a>
+<br><br>
+<h3>Classroom Operations</h3>
+<a href="/addRoom" class = "btn btn-warning"> Add Classroom  </a>
+<a href="/deleteRoom" class = "btn btn-warning"> Delete Classroom  </a>
+
+{% endblock body %}

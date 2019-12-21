@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block body %}	<br/>
+<h3> Teachers </h3>
+<hr>
+
+{% if teachers %}
+  <br>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Username</th>
+
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Avaliable Courses</th>
+
+      </tr>
+    </thead>  
+    <tbody>
+    {% for teacher in teachers %}
+    <tr>
+        <th scope="row">{{teacher[1]}}</th>
+        <td>{{teacher[2]}}</td>
+        <td>{{teacher[3]}}</td>
+        <td>{{teacher[4]}}</td>
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <br/>
+  <div class="alert alert-warning"> There is no teacher </div>
+  {%  endif %}
+
+
+{% endblock body %}

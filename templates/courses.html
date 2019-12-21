@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block body %}	<br/>
+<h3> Courses </h3>
+<hr>
+
+{% if courses %}
+  <br>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">CRN</th>
+        <th scope="col">Name</th>
+        <th scope="col">Quota</th>
+        <th scope="col">Grade Condition</th>
+        <th scope="col">Room</th>
+        <th scope="col">Day</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+      </tr>
+    </thead>  
+    <tbody>
+    {% for course in courses %}
+    <tr>
+        <th scope="row">{{course[1]}}</th>
+        <td>{{course[2]}}</td>
+        <td>{{course[3]}}</td>
+        <td>{{course[4]}}</td>
+        <td>{{course[5]}}</td>
+        <td>{{course[6]}}</td>
+        <td>{{course[7]}}:00</td>
+        <td>{{course[8]}}:00</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <br/>
+  <div class="alert alert-warning"> There is no course </div>
+  {%  endif %}
+
+
+{% endblock body %}

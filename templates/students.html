@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}	<br/>
+<h3> Students </h3>
+<hr>
+
+{% if students %}
+  <br>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Grade</th>
+      </tr>
+    </thead>  
+    <tbody>
+    {% for student in students %}
+    <tr>
+        {% if student[1]!="000000000" %}
+        <th scope="row">{{student[1]}}</th>
+        <td>{{student[2]}}</td>
+        <td>{{student[3]}}</td>
+        <td>{{student[4]}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+  <br/>
+  <div class="alert alert-warning"> There is no student</div>
+  {%  endif %}
+
+
+{% endblock body %}
