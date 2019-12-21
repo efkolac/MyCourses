@@ -96,7 +96,7 @@ def login():
 
 @app.route("/addStudent",methods=["GET","POST"])
 @login_required
-def addarticle():
+def addStudent():
     form = StudentForm(request.form)
     if request.method == "POST" and form.validate() :   # form validate ise doğru
         number = form.number.data
