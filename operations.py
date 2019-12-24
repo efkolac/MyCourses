@@ -86,7 +86,7 @@ def find_course_starttime(courseId,roomname,day):
 def find_starttime(courseId):
     with dbapi2.connect(url) as connection:
         cursor = connection.cursor()
-        sorgu = "SELECT starttime FROM COURSE id = %s"
+        sorgu = "SELECT starttime FROM COURSE where id = %s"
         cursor.execute(sorgu,(courseId,))
         user = cursor.fetchone()
         cursor.close()
@@ -95,7 +95,7 @@ def find_starttime(courseId):
 def find_endtime(courseId):
     with dbapi2.connect(url) as connection:
         cursor = connection.cursor()
-        sorgu = "SELECT endtime FROM COURSE id = %s"
+        sorgu = "SELECT endtime FROM COURSE where id = %s"
         cursor.execute(sorgu,(courseId,))
         user = cursor.fetchone()
         cursor.close()
@@ -124,8 +124,7 @@ def register_course(userid,courseid):
         cursor = connection.cursor() 
         sorgu = "Insert into COURSE_TAKERS(userId,courseId) VALUES (%s,%s)"
         cursor.execute(sorgu,(userid,courseid)) #tek elemanlıysa (name,)
-        sorgu = "Update COURSE set quota = quota-1 where id = %s "
-        cursor.execute(sorgu,(userid,courseid)) #tek elemanlıysa (name,)
+
         connection.commit()
         cursor.close()
 

@@ -4,24 +4,20 @@ Created on Sun Jul 21 17:37:11 2019
 
 @author: Batuhan
 """
+from functools import wraps
+
+from flask import Flask, render_template, flash, redirect, url_for, session, request
 #####################################################################
 ### Assignment skeleton
 ### You can alter the below code to make your own dynamic website.
 ### The landing page for assignment 3 should be at /
 #####################################################################
 
-from flask_login import login_user, LoginManager, logout_user
-from flask import Flask,render_template,flash,redirect,url_for,session,logging,request
 from passlib.hash import sha256_crypt
-from functools import wraps
-from wtforms import Form,StringField,PasswordField,validators,TextAreaField,DateTimeField,BooleanField
+
 from forms import *
-import psycopg2 as dbapi2
-import os
-import sys
-import time
-import datetime
 from operations import *
+
 
 #Kullanıcı giriş decorator
 def login_required(f):
@@ -36,13 +32,11 @@ def login_required(f):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ThisisSecret'
-login = LoginManager(app)
 url = "postgres://ocponcdw:3qJhgtvyyELu7FXS4FSujJEWJGoYx3V9@raja.db.elephantsql.com:5432/ocponcdw"
 
 @app.route("/logout")
 def logout():
     session.clear()
-    logout_user()
     return redirect(url_for("index"))
     
 @app.route("/userdashboard")
@@ -63,9 +57,7 @@ def admindashboard():
 @app.route("/deleteuser")
 @login_required
 def deleteStudent():
-    delete_user_username(session["username"])
     session.clear()
-    logout_user()
     return redirect(url_for("index"))
 
 @app.route("/login",methods=["GET","POST"])    
@@ -173,7 +165,6 @@ def deleteCourse():
 
 @app.route("/")
 def index():
-    logout_user()
     return render_template("index.html")
 
 @app.route("/addTeacher",methods=["GET","POST"])
@@ -254,7 +245,7 @@ def registration():
         result2=find_course(course2)
         result3=find_course(course3)
         if result1 == None: # böyle bir ders var mı
-            flash("No course like this","warning") #message,category
+
             return render_template("registration.html",form = form) 
         else:
             result11= find_course_taker(user[0])
@@ -273,8 +264,7 @@ def registration():
                 return render_template("registration.html",form = form)
         
         if result2 == None: # böyle bir ders var mı
-            flash("No course like this","warning") #message,category
-            return render_template("registration.html",form = form) 
+            return render_template("registration.html",form = form)
         else:
             result21= find_course_taker(user[0])
             if (result21 == None):  # dersi almış mı
@@ -291,7 +281,7 @@ def registration():
                 flash("Registration failed","warning") #message,category
                 return render_template("registration.html",form = form)
         if result3 == None: # böyle bir ders var mı
-            flash("No course like this","warning") #message,category
+
             return render_template("registration.html",form = form) 
         else:
             result31= find_course_taker(user[0])
@@ -338,43 +328,65 @@ def addRoom():
         flash("Unsuccessful operation","warning")
         return render_template("registerRoom.html",form = form)
 
+def wrap_index_error(func):
+    def wrapped_func(*args, **kwargs):
+        try:
+            func_response = func(*args, **kwargs)
+        except IndexError:
+            return render_template("admindashboard.html")
+        return func_response
+    return wrapped_func
+
 @app.route("/optimize")
-@login_required
+@wrap_index_error
 def optimize():
-    courses = find_courses_orderby_quota()
-    rooms = find_rooms_orderby_quota()
-    teachers = find_teachers_orderby_quota()
-    i=0
-    j=0
-    k=0
-    while(i<len(courses)):
+    try:
+        courses = find_courses_orderby_quota()
+        rooms = find_rooms_orderby_quota()
+        teachers = find_teachers_orderby_quota()
+        i=0
         j=0
-        while(j<len(rooms)):
-            if(courses[i][3]<rooms[j][1]):  # ders kontejanı sınıftan küçükse
-                start = find_starttime(courses[i][0])
-                end = find_endtime(courses[i][0])
-                class_course = find_course_from_room(course[i][0])
-                if (class_course==None or class_course==[]):    # sınıfa ders atanmamışsa
-                    insert_room_for_course(courses[i][0],rooms[j][0])
-                    insert_teacher_for_course(courses[i][0],teachers[k][0])
-                    k=k+1
-                    if(k==len(teachers)):
-                        k=0
-                    i=i+1
-                else:   # atanmışsa saatleri kontrol et uygunsa atama yap
-                    start2 = find_course_starttime(courses[i][0],rooms[j][0],courses[i][6])
-                    end2 = find_course_endtime(courses[i][0],rooms[j][0],courses[i][6])
-                    if ((start<start2 and start<end2 and endz<=start2 and end<end2) or (start>start2 and start>=end2 and end>start2 and end>end2)):
-                        insert_room_for_course(courses[i][0],rooms[j][0])
-                        insert_teacher_for_course(courses[i][0],teachers[k][0])
-                        k=k+1
-                        if(k==len(teachers)):
-                            k=0
-                        i=i+1
+        k=0
+
+        while(i<len(courses)):
+            if (i==len(courses)):
+                return render_template("index.html")
+            try:
+                while(j<len(rooms)):
+                    if (i==len(courses)):
+                        return render_template("index.html")
+                    if (j==len(rooms)):
+                        return render_template("index.html")
+                    if(courses[i][3]<rooms[j][1]):  # ders kontejanı sınıftan küçükse
+                        start = find_starttime(courses[i][0])
+                        end = find_endtime(courses[i][0])
+                        class_course = find_course_from_room(courses[i][0])
+                        if (class_course==None or class_course==[]):    # sınıfa ders atanmamışsa
+                            insert_room_for_course(courses[i][0],rooms[j][0])
+                            insert_teacher_for_course(courses[i][0],teachers[k][0])
+                            k=k+1
+                            if(k==len(teachers)):
+                                k=0
+                            i=i+1
+                        else:   # atanmışsa saatleri kontrol et uygunsa atama yap
+                            start2 = find_course_starttime(courses[i][0],rooms[j][0],courses[i][6])
+                            end2 = find_course_endtime(courses[i][0],rooms[j][0],courses[i][6])
+                            if ((start<start2[0] and start<end2[0] and end<=start2[0] and end<end2[0]) or (start>start2[0] and start>=end2[0] and end>start2[0] and end>end2[0])):
+                                insert_room_for_course(courses[i][0],rooms[j][0])
+                                insert_teacher_for_course(courses[i][0],teachers[k][0])
+                                k=k+1
+                                if(k==len(teachers)):
+                                    k=0
+                                i=i+1
+                            else:
+                                j=j+1
                     else:
                         j=j+1
-            else:
-                j=j+1
+            except(IndexError):
+                return render_template("index.html")
+    except (IndexError):
+        return render_template("index.html")
+    return render_template("index.html")
 
 @app.route("/rooms")
 def rooms():
